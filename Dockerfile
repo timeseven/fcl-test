@@ -1,6 +1,9 @@
 # Base image
 FROM node:18.17.1-alpine
 
+ARG POSTGRES_HOST
+ENV DATABASE_URL="postgresql://postgres:password@${POSTGRES_HOST}:5432/postgres?schema=public"
+
 # Create app directory
 WORKDIR /web
 
@@ -16,7 +19,6 @@ COPY .env ./
 # COPY tsconfig.json file
 COPY tsconfig.json ./
 
-COPY migrate-and-start.sh ./
 
 # COPY
 COPY . .
@@ -34,4 +36,4 @@ RUN npx prisma generate
 EXPOSE 3000
 
 # Start the server
-CMD ["./migrate-and-start.sh"]
+CMD source migrate-and-start.sh

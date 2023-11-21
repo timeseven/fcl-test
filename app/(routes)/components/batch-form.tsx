@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { z } from "zod";
 import axios from "axios";
 import { format } from "date-fns";
+import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -17,8 +18,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { licenseData, modelData } from "@/lib/consts";
 import { cn } from "@/lib/utils";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   model: z.string().min(1),
@@ -35,7 +34,6 @@ const formSchema = z.object({
 
 const BatchForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -107,6 +105,7 @@ const BatchForm = () => {
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
+                            disabled={loading}
                             variant={"outline"}
                             className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
                           >
@@ -135,7 +134,7 @@ const BatchForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input disabled={loading} placeholder="Quantity" {...field} />
+                      <Input placeholder="Quantity" {...field} disabled={loading} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -177,7 +176,7 @@ const BatchForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input disabled={loading} placeholder="Comment (Not required)" {...field} />
+                      <Input placeholder="Comment (Not required)" {...field} disabled={loading} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

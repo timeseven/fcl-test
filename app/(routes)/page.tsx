@@ -3,7 +3,7 @@ import BatchForm from "./components/batch-form";
 
 export default function Home() {
   return (
-    <div className="h-screen bg-bgColor-Default">
+    <div>
       <Navbar />
       <BatchForm />
     </div>

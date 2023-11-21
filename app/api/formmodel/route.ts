@@ -11,9 +11,9 @@ export async function POST(req: Request) {
       return new NextResponse("Name is required", { status: 400 });
     }
 
-    // if (!date) {
-    //   return new NextResponse("Date is required", { status: 400 });
-    // }
+    if (!date) {
+      return new NextResponse("Date is required", { status: 400 });
+    }
 
     if (!quantity) {
       return new NextResponse("Quantity is required", { status: 400 });
@@ -29,6 +29,7 @@ export async function POST(req: Request) {
         date,
         quantity,
         license,
+        comment,
       },
     });
 
